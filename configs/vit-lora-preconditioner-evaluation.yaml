@@ -1,0 +1,25 @@
+train_args:
+  total_epochs: 1
+  eval_steps: 100 # number of evaluation for each method
+  max_length: 100
+  accumulate_steps: 4 
+  batch_size: 40 # accumulate_steps * batch_size = total evaluated batch size
+  eval_batch_size: 40 
+  remote: True
+  eval_train: true # whether to use train mode model to generate gradient or eval mode model
+  data: "cifar100"  # target data set among: "sst2" "qqp" "mnli" "mrpc" "qnli" "rte" "stsb" "wnli"
+
+model:
+  peft_mode: "lora"
+  base_model_name: "google/vit-base-patch16-224"
+  model_ckpt: "./example_ckpts/cifar_vit_lora_e2" # input the target checkpoints to be evaluated e.g. ./sample_ckpts/sst2_t5_prompt_tuning_epoch9
+  # keep these configurations
+  LR_num: 8
+  LR_alpha: 8
+  LR_bias: "lora_only"
+  LR_dropout: 0
+
+optimiser:
+  damping: [1, 1.e-1, 1.e-2, 1.e-3, 1.e-4, 1.e-5] # target damping factors to be evaluated
+
+

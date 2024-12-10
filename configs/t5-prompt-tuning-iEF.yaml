@@ -1,0 +1,22 @@
+train_args:
+  remote: True
+  total_epochs: 20
+  eval_steps: 1000 # frequency of model saving and model evaluation
+  max_length: 100
+  batch_size: 32
+  eval_batch_size: 32
+  accumulate_steps: 1
+  eval_train: true # whether to use train mode model to generate gradient or eval mode model
+  data: "sst2"
+
+model:
+  base_model_name: "t5-base"
+  PE_num: 20
+
+optimiser:
+  opt_type: "GPiEFlg2"
+  lr: 50
+  adapt_lr: false
+  momentum: 0
+  damping: 1.e-7
+  norm_update: false

@@ -1,0 +1,33 @@
+train_args:
+  remote: True
+  total_epochs: 5
+
+  eval_steps: 1000 # frequency of model saving and model evaluation
+
+  batch_size: 32
+  eval_batch_size: 32
+  accumulate_steps: 1
+  eval_train: true # whether to use train mode model to generate gradient or eval mode model
+
+  data: "cifar100"
+
+model:
+  peft_mode: "lora" # "prompt"
+  base_model_name: "google/vit-base-patch16-224"
+  LR_num: 8
+  LR_alpha: 8
+  LR_bias: "lora_only" # "lora_only" or "none"
+  LR_dropout: 0.1
+
+scheduler:
+  constant: true
+  plateau: false
+
+optimiser:
+  opt_type: "GPiEFlg2" # "iEF(n)[0, 1, 2]"; "SGD"; "(i)Adam"; "CLiEF"
+  damping: 1.e-12
+  lr: 50
+  momentum: 0
+  norm_update: false
+
+  

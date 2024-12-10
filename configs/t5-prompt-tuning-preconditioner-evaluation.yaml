@@ -1,0 +1,26 @@
+train_args:
+  total_epochs: 1
+  eval_steps: 100 # number of evaluation for each method
+  max_length: 100
+  accumulate_steps: 4 
+  batch_size: 40 # accumulate_steps * batch_size = total evaluated batch size
+  eval_batch_size: 40 
+  remote: True
+  eval_train: true # whether to use train mode model to generate gradient or eval mode model
+  data: "sst2"  # target data set among: "sst2" "qqp" "mnli" "mrpc" "qnli" "rte" "stsb" "wnli"
+
+model:
+  peft_mode: "prompt" # specify either "lora" (for LoRA checkpoints) or "prompt" (for prompt tuning checkpoints)
+  base_model_name: "t5-base"
+  model_ckpt: "./example_ckpts/sst2_t5_lora_e11" # input a list of path to checkpoints to be evaluated
+  # keep these configurations
+  PE_num: 20
+  LR_num: 8
+  LR_alpha: 8
+  LR_bias: "lora_only"
+  LR_dropout: 0
+
+optimiser:
+  damping: [1, 1.e-1, 1.e-2, 1.e-3, 1.e-4, 1.e-5] # target damping factors to be evaluated
+
+
